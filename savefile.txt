@@ -1,0 +1,105 @@
+Title: Gadsby
+Author: Ernest Vincent Wright
+Genre: Novel
+Quantity available: 2
+
+Title: Moby Dick
+Author: Herman Melville
+Genre: Adventure
+Quantity available: 5
+
+Title: Fahrenheit 451
+Author: Ray Bradbury
+Genre: Dystopian
+Quantity available: 4
+
+Title: Duskbell
+Author: Annabelle DuPont
+Genre: Fantasy
+Quantity available: 1
+
+Title: Artemis Fowl
+Author: Eoin Colfer
+Genre: Fantasy, Children's Literature
+Quantity available: 3
+
+Title: The Outsider
+Author: Stephen King
+Genre: Crime Fiction, Horror
+Quantity available: 5
+
+Title: The Great Gatsby
+Author: F Scott Fitzgerald
+Genre: Tragedy
+Quantity available: 3
+
+Title: The Shining
+Author: Stephen King
+Genre: Gothic Novel, Horror
+Quantity available: 5
+
+Title: Disorder in the Court
+Author: Charles M. Sevilla
+Genre: Humor
+Quantity available: 2
+
+Title: Some Book
+Author: Faux Cares
+Genre: Fiction
+Quantity available: 4
+
+Title: The Scarlet Letter
+Author: Nathaniel Hawthorne
+Genre: Romantic, Historical Fiction
+Quantity available: 4
+
+Title: Secrets of Mental Math
+Author: Arthur Benjamin
+Genre: Mathematics
+Quantity available: 3
+
+Title: Odyssey
+Author: Homer
+Genre: Epic poetry
+Quantity available: 3
+
+Title: The Generally Nice, Friendly Thing That Can And Will Kill SCP-682 Permanently if it So Much As Spots That Lizard
+Author: Dr. [Redacted]
+Genre: Fiction
+Quantity available: 1
+
+Title: Fundamentals of Physics
+Author: David Halliday and Robert Resnick
+Genre: Textbook
+Quantity available: 3
+
+Title: I Am a Cat
+Author: Natsume Soseki
+Genre: Satirical novel
+Quantity available: 2
+
+Title: Adventures of Huckleberry Finn
+Author: Mark Twain
+Genre: Picaresque Novel
+Quantity available: 5
+
+Title: The Adventures of Sherlock Holmes
+Author: Arthur Conan Doyle
+Genre: Detective Fiction, Short Stories
+Quantity available: 3
+
+Title: The Adventures of Herlock Sholmes
+Author: Iris Wilson
+Genre: Detective Fiction, Short Stories
+Quantity available: 3
+
+Title: The Alchemist
+Author: Paulo Coelho
+Genre: Adeventure
+Quantity available: 3
+
+Title: A Tale of Two Cities
+Author: Charles Dickens
+Genre: Historical Novel
+Quantity available: 1
+
