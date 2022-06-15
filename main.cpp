@@ -87,7 +87,7 @@ void menu() {
 void readInputFile(HashTable<Book>& hashAry, string filename, int hashSize, BinarySearchTree& bst)
 {
 	//string filename;
-	int isbn;
+	string isbn;
 	string title;
 	string author;
 	string genre;
@@ -147,7 +147,7 @@ int getLines(string& filename)
 {
 	ifstream inFile;
 	string s;
-	int i;
+	string i;
 	int count = 0;
 	string input;
 	//inFile.open(filename);

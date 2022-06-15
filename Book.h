@@ -12,7 +12,8 @@ using std::string;
 class Book
 {
 private:
-    int isbn;
+
+    string isbn;
     string title;
     string author;
     string genre;
@@ -24,14 +25,14 @@ public:
     Book(int, string, string, string, int);
 
     // setters
-    void setISBN(int i) { isbn = i; }
+    void setISBN(string i) { isbn = i; }
     void setTitle(string t) { title = t; }
     void setAuthor(string a) { author = a; }
     void setGenre(string g) { genre = g; }
     void setQuantity(int q) { quantity = q; }
 
     // getters
-    int getISBN() const { return isbn; }
+    string getISBN() const { return isbn; }
     string getTitle() const { return title; }
     string getAuthor() const { return author; }
     string getGenre() const { return genre; }

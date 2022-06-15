@@ -14,7 +14,8 @@ using namespace std;
 //**************************************************
 Book::Book()
 {
-	isbn = -1;
+
+	isbn = "";
 	title = "";
 	author = "";
 	genre = "";
@@ -24,7 +25,9 @@ Book::Book()
 //**************************************************
 // Overloaded constructor
 //**************************************************
-Book::Book(int i, string t, string a, string g, int q)
+
+Book::Book(string i, string t, string a, string g, int q)
+
 {
 	isbn = i;
 	title = t;
