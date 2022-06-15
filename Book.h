@@ -22,7 +22,7 @@ private:
 public:
     // constructors
     Book();
-    Book(int, string, string, string, int);
+    Book(string, string, string, string, int);
 
     // setters
     void setISBN(string i) { isbn = i; }
