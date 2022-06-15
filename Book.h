@@ -12,6 +12,7 @@ using std::string;
 class Book
 {
 private:
+
     string isbn;
     string title;
     string author;
@@ -21,7 +22,7 @@ private:
 public:
     // constructors
     Book();
-    Book(string, string, string, string, int);
+    Book(int, string, string, string, int);
 
     // setters
     void setISBN(string i) { isbn = i; }
