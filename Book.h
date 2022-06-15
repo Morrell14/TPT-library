@@ -12,7 +12,7 @@ using std::string;
 class Book
 {
 private:
-    string ID;
+    string isbn;
     string title;
     string author;
     string genre;
@@ -24,14 +24,14 @@ public:
     Book(string, string, string, string, int);
 
     // setters
-    void setID(string id) { ID = id; }
+    void setISBN(string i) { isbn = i; }
     void setTitle(string t) { title = t; }
     void setAuthor(string a) { author = a; }
     void setGenre(string g) { genre = g; }
     void setQuantity(int q) { quantity = q; }
 
     // getters
-    string getID() const { return ID; }
+    string getISBN() const { return isbn; }
     string getTitle() const { return title; }
     string getAuthor() const { return author; }
     string getGenre() const { return genre; }
@@ -44,8 +44,6 @@ public:
     friend std::ostream& operator << (std::ostream& os, const Book& b);
 
     // other functions (may or may not be used)
-    void checkOut(Book b, int q);
-    void returnBook(Book b, int q);
 
 };
 

@@ -14,7 +14,7 @@ using namespace std;
 //**************************************************
 Book::Book()
 {
-	ID = "";
+	isbn = "";
 	title = "";
 	author = "";
 	genre = "";
@@ -24,9 +24,9 @@ Book::Book()
 //**************************************************
 // Overloaded constructor
 //**************************************************
-Book::Book(string id, string t, string a, string g, int q)
+Book::Book(string i, string t, string a, string g, int q)
 {
-	ID = id;
+	isbn = i;
 	title = t;
 	author = a;
 	genre = g;
@@ -38,39 +38,10 @@ Book::Book(string id, string t, string a, string g, int q)
 //**************************************************
 ostream& operator << (ostream& os, const Book& b)
 {
-	os << "ID: " << b.getID() << endl;
+	os << "ISBN: " << b.getISBN() << endl;
 	os << "Title: " << b.getTitle() << endl;
 	os << "Author: " << b.getAuthor() << endl;
 	os << "Genre: " << b.getGenre() << endl;
 	os << "Quantity available: " << b.getQuantity() << endl;
 	return os;
-}
-
-//**************************************************
-// checkOut function - subtracts a specified quantity
-// from the given book
-//**************************************************
-void Book::checkOut(Book b, int q)
-{
-	if (q > b.getQuantity())
-	{
-		cout << "Error: Specified quantity is too high. Maximum is " << b.getQuantity() << endl;
-		return;
-	}
-
-	b.setQuantity(b.getQuantity() - q);
-}
-
-//**************************************************
-// returnBook function - adds a specified quantity
-// to the given book
-//**************************************************
-void Book::returnBook(Book b, int q)
-{
-	if (q <= 0)
-	{
-		cout << "Error: Invalid quantity. Must be greater than 0." << endl;
-		return;
-	}
-	b.setQuantity(b.getQuantity() + q);
 }
