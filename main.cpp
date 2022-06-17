@@ -19,7 +19,7 @@ int getLines(string& filename);
 bool isPrime(int n);
 int nextPrime(int n);
 void reformatData(string& t, string& a, string& g);
-void reformatOutData(string& t, string& a, string& g);
+//void reformatOutData(string& t, string& a, string& g);
 void hDisplay(Book&);
 void vDisplay(Book&);
 void iDisplay(Book&, int);
@@ -32,6 +32,7 @@ int main()
 	string choice;
 	HashTable<Book> hashTable;
 	Stack<Book> undo;
+	int deleted = 0;
 
 	menu(); 							// display the menu
 
@@ -116,12 +117,22 @@ int main()
 			hashTable.remove(output, temp, key_to_index);
 			bst.remove(output);
 			undo.push(output);
+			deleted++;
 		}
 
 		if (choice == "6")
 		{
-			Book restored = undo.pop();
-			cout << "Book " << restored.getTitle() << " restored." << endl;
+			if (deleted == 0)
+			{
+				cout << "No entries to restore!" << endl;
+			}
+			else
+			{
+				Book restored = undo.pop();
+				cout << "Book " << restored.getTitle() << " restored." << endl;
+				deleted--;
+			}
+			
 		}
 
 		if (choice == "7")
@@ -134,6 +145,11 @@ int main()
 		if (choice == "8")
 		{
 			hashTable.saveFile();
+			for (int i = 0; i < deleted; i++)
+			{
+				undo.pop();
+			}
+			deleted = 0;
 		}
 
 		if (choice == "9")	// display the menu again
@@ -349,13 +365,14 @@ void reformatData(string& t, string& a, string& g)
   Removes spaces and replaces them with underscores in the format
   of input files.
   Written by James Qin
-*~**/
+*~*
 void reformatOutData(string& t, string& a, string& g)
 {
 	replace(t.begin(), t.end(), ' ', '_');
 	replace(a.begin(), a.end(), ' ', '_');
 	replace(g.begin(), g.end(), ' ', '_');
 }
+*/
 
 void hDisplay(Book& item)
 {
