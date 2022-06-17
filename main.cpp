@@ -18,39 +18,39 @@ int key_to_index(const Book& key, int size);
 int getLines(string& filename);
 bool isPrime(int n);
 int nextPrime(int n);
-void reformatData(string& t, string& a, string& g);
-//void reformatOutData(string& t, string& a, string& g);
+void reformatData(string& i, string& t, string& a, string& g);
+void reformatOutData(string& i, string& t, string& a, string& g);
 void hDisplay(Book&);
 void vDisplay(Book&);
 void iDisplay(Book&, int);
 void menu();
-// string findID(Book&);
+
 
 int main()
 {
 	BinarySearchTree bst;
-	string choice;
+	string choice = "1";
 	HashTable<Book> hashTable;
 	Stack<Book> undo;
-	int deleted = 0;
 
+	cout << "\n~~~~~~~~~~~~~~ Welcome To TPT Library ~~~~~~~~~~~~~~\n";
 	menu(); 							// display the menu
+	cin >> choice;
 
 	do
-	{
-		//cin >> choice;
+	{	
+		if (choice == "Q" || choice == "q") { // quit
+			return 0;
+		} 
+
 		if (choice == "1") // add data from file
 		{					
 			string filename = "";
 			int lines = getLines(filename);
-			if (lines != -1)
-			{
-				int hashSize = nextPrime(2 * lines);
-				HashTable<Book> hashAry(hashSize);
-				readInputFile(hashAry, filename, hashSize, bst);
-				hashTable = hashAry;
-			}
-			
+			int hashSize = nextPrime(2 * lines);
+			HashTable<Book> hashAry(hashSize);
+			readInputFile(hashAry, filename, hashSize, bst);
+			hashTable = hashAry;
 			//hashAry.saveFile();
 		}
 
@@ -58,6 +58,7 @@ int main()
 		{					
 			//cout << "binary search tree:" << endl;
 			//bst.inOrder(vDisplay);
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ All Books ~~~~~~~~~~~~~~~~~~~~~~~\n";
 			bst.inOrder(hDisplay);
 		}
 
@@ -68,11 +69,7 @@ int main()
 			string author;
 			string genre;
 			int quantity;
-			if (hashTable.getLoadFactor() >= 75)		// Create a new, bigger hash table if load factor >= 75%
-			{
-				hashTable = *hashTable.rehash(hashTable.getSize(), nextPrime, key_to_index);
-				//cout << "rehash called" << endl;
-			}
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Add New Book ~~~~~~~~~~~~~~~~~~~~~~~\n";
 			cout << "Enter ISBN: ";
 			cin >> isbn;
 			cin.ignore();
@@ -96,11 +93,13 @@ int main()
 		if (choice == "4")
 		{
 			string isbn;
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Search Book By ISBN ~~~~~~~~~~~~~~~~~~~~~~~\n";
 			cout << "Enter ISBN number of book to search: ";
 			cin >> isbn;
 			Book temp(isbn, "", "", "", 0);
 			Book result;
-			if (hashTable.search(result, temp, key_to_index) != -1)
+			int index = hashTable.search(result, temp, key_to_index);
+			if (index != -1)
 			{
 				cout << "Book found!" << endl;
 				cout << result << endl;
@@ -110,7 +109,7 @@ int main()
 				cout << "No such book was found." << endl;
 			}
 		}
-
+/*
 		if (choice == "5")
 		{
 			string isbn;
@@ -118,37 +117,20 @@ int main()
 			cin >> isbn;
 			Book temp(isbn, "", "", "", 0);
 			Book output;
-			if (hashTable.remove(output, temp, key_to_index))
-			{
-				bst.remove(output);
-				undo.push(output);
-				deleted++;
-				cout << "Book " << output.getTitle() << " successfully removed." << endl;
-			}
-			else
-				cout << "No such book to delete!" << endl;
-			
-		}
+			hashTable.remove(output, temp, key_to_index);
+			bst.remove(output);
+		} */
 
 		if (choice == "6")
 		{
-			if (deleted == 0)
-			{
-				cout << "No entries to restore!" << endl;
-			}
-			else
-			{
-				Book restored = undo.pop();
-				hashTable.insert(restored, key_to_index);
-				bst.insert(restored);
-				cout << "Book " << restored.getTitle() << " restored." << endl;
-				deleted--;
-			}
-			
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Undo Delete ~~~~~~~~~~~~~~~~~~~~~~~\n";
+			Book restored = undo.pop();
+			cout << "Book " << restored.getTitle() << " restored." << endl;
 		}
 
 		if (choice == "7")
 		{
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Statistics ~~~~~~~~~~~~~~~~~~~~~~~\n";
 			cout << "Load factor: " << hashTable.getLoadFactor() << endl;
 			cout << "Total collisions: " << hashTable.getTotalCollisions() << endl;
 			cout << "Longest collision path: " << hashTable.findLargestPath() << endl;
@@ -156,12 +138,8 @@ int main()
 
 		if (choice == "8")
 		{
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Saving The File ~~~~~~~~~~~~~~~~~~~~~~~\n";
 			hashTable.saveFile();
-			for (int i = 0; i < deleted; i++)
-			{
-				undo.pop();
-			}
-			deleted = 0;
 		}
 
 		if (choice == "9")	// display the menu again
@@ -169,44 +147,50 @@ int main()
 			menu();
 		}
 
-		if (choice == "t")
-		{
-			bst.printTree(iDisplay);
-		}
+		if (choice == "A" || choice == "a") {
+			cout <<"\n~~~~~~~~~~~~~~~~~~~~~~~ Credits ~~~~~~~~~~~~~~~~~~~~~~~\n";
+			cout <<"This program was created by: \n";
+			cout <<"James Qin - Team Leader, Unit 5: File Input/Output\n";
+			cout <<"Morrell Nioble- Unit 2: BST Algorithms\n";
+			cout <<"Henry Vo - Unit 3: Hash List Algorithms\n";
+			cout <<"Rimma Esheva - Unit 4: Screen Output\n";
+			cout <<"\nThank you for using out program!\n";
 
-		if (choice == "a")
-		{
-			cout << "Team 10: Tagbaley Tanguy Paul Morrell Nioble, Henry Vo, Rimma Esheva, and James Qin." << endl;
 		}
-
-		cout << "Enter option of choice, 9 to bring up the menu again, or q to quit." << endl;
+		cout << "\nEnter option of choice, 9 to bring up the menu again, or Q to quit." << endl;
 		cin >> choice;
-	} while (choice != "q" && choice != "Q");
+	} while (choice != "Q");
+
+	
 
 	return 0;
 }
+
+
 
 /*~*~*~*
   Program Menu.
   Allows user to interact with the program.
   Written by Rimma Esheva
 *~**/
-// Not a final version
 void menu() {
 	// Menu options
-	cout << "\nPlease choose one of the options or Q to exit: \n";
-	cout << "1 - Add Data From File\n"
+	cout << "\n~~~~~~~~~~~~~~~~~~~~~~~ Menu ~~~~~~~~~~~~~~~~~~~~~~~\n";
+	cout << "Please choose one of the options or Q to exit: \n";
+	cout << "1 - Add Data From A New File\n"
 		<< "2 - Show All Books\n"
 		<< "3 - Add New Book To Database\n"
 		<< "4 - Search Book By ISBN\n"
 		<< "5 - Delete Book From Database\n"
 		<< "6 - Undo Delete\n"
 		<< "7 - Show Statistics\n"
-		<< "8 - Save to file\n"
-		<< "9 - Help\n"
-		<< "q - Quit\n";
+		<< "8 - Save File\n" 
+		<< "9 - Print Menu\n";
 
 }
+
+
+
 
 /*~*~*~*
   Reads an input file and inserts the data into the hash table and BST,
@@ -216,51 +200,67 @@ void menu() {
 *~**/
 void readInputFile(HashTable<Book>& hashAry, string filename, int hashSize, BinarySearchTree& bst)
 {
-	//string filename;
-	string isbn;
-	string title;
-	string author;
-	string genre;
-	int quantity;
-	ifstream inFile;
-	int lines = 0;
-	int preview = 0;
+    //string filename;
+    string isbn;
+    string title;
+    string author;
+    string genre;
+    int quantity;
+    ifstream inFile;
+    int lines = 0;
+    int preview = 0;
 
-	inFile.open(filename);
-	//cout << "hashSize: " << hashSize << endl;
-	cout << "Preview of books inserted: ";
-	while (inFile >> isbn)
-	{
-		inFile >> title >> author >> genre >> quantity;
-		reformatData(title, author, genre);
-		Book item(isbn, title, author, genre, quantity);
-		if (hashAry.getLoadFactor() >= 75)		// Create a new, bigger hash table if load factor >= 75%
-		{
-			hashAry = *hashAry.rehash(hashAry.getSize(), nextPrime, key_to_index);
-			//cout << "rehash called" << endl;
-		}
-		hashAry.insert(item, key_to_index);
-		//item.setISBN(isbn);
-		hashAry.insert(item, key_to_index);
-		bst.insert(item);
-		//cout << "inserted: " << item.getTitle() << endl;
-		if (preview < 5)	// Shows title of first 5 books
-		{
-			cout << item.getTitle() << ", ";
-			preview++;
-		}
-	}
-	inFile.close();
-	cout << "..." << endl;
-	//cout << "all entries inserted" << endl;
+    inFile.open(filename);
+    //cout << "hashSize: " << hashSize << endl;
+    cout << "Preview of books inserted: ";
+    while (inFile >> isbn)
+    {
+        inFile >> title >> author >> genre >> quantity;
+        reformatData(isbn, title, author, genre);
+        Book item(isbn, title, author, genre, quantity);
+        if (hashAry.getLoadFactor() >= 75)        // Create a new, bigger hash table if load factor >= 75%
+        {
+            hashAry = *hashAry.rehash(hashAry.getSize(), nextPrime, key_to_index);
+            //cout << "rehash called" << endl;
+        }
+        hashAry.insert(item, key_to_index);
+        //item.setISBN(isbn);
+        hashAry.insert(item, key_to_index);
+        bst.insert(item);
+        //cout << "inserted: " << item.getTitle() << endl;
+        if (preview < 5)    // Shows title of first 5 books
+        {
+            cout << item.getTitle() << ", ";
+            preview++;
+        }
+    }
+    inFile.close();
+    cout << "..." << endl;
+    //cout << "all entries inserted" << endl;
 }
+/*
+void searchManager(HashTable<Book>& hashAry) {
+	
+	Book item(isbn, title, author, genre, quantity);
+	string toFInd; // book title to search for
+	cin >> toFind;
+	cout << "\n Search\n";
+	cout << "=======\n";
+
+	while (toFInd != "Q") {
+		Book 
+
+		
+		
+	}
+}*/
 
 /*~*~*~*
   Hash function
 *~**/
 int key_to_index(const Book& key, int size)
 {
-	string k = key.getISBN();
+	string k = key.getTitle();
 	int sum = 0;
 	for (int i = 0; k[i]; i++)
 		sum += k[i];
@@ -284,7 +284,7 @@ int getLines(string& filename)
 	bool fileOpened = false;
 	do
 	{
-		cout << "What is the file name? (q to return)" << endl;
+		cout << "What is the file name? " << endl;
 		cin >> input;
 		inFile.open(input);
 		if (inFile)
@@ -298,16 +298,8 @@ int getLines(string& filename)
 			inFile.close();
 		}
 		else
-		{
-			if (input != "q")
-				cout << "Error: File could not be opened. Please try again." << endl;
-		}
-			
-	} while (!fileOpened && input != "q");
-	if (input == "q")
-	{
-		return -1;
-	}
+			cout << "Error: File could not be opened. Please try again." << endl;
+	} while (!fileOpened);
 	//cout << "lines read: " << count << endl;
 	cout << "File " << input << " successfully opened!" << endl;
 	return count;
@@ -365,8 +357,10 @@ int nextPrime(int n)
   Removes underscores and replaces them with spaces.
   Written by James Qin
 *~**/
-void reformatData(string& t, string& a, string& g)
+void reformatData(string& i, string& t, string& a, string& g)
 {
+
+	replace(i.begin(), i.end(), '_', ' ');
 	replace(t.begin(), t.end(), '_', ' ');
 	replace(a.begin(), a.end(), '_', ' ');
 	replace(g.begin(), g.end(), '_', ' ');
@@ -377,21 +371,22 @@ void reformatData(string& t, string& a, string& g)
   Removes spaces and replaces them with underscores in the format
   of input files.
   Written by James Qin
-*~*
-void reformatOutData(string& t, string& a, string& g)
+*~**/
+void reformatOutData(string& i, string& t, string& a, string& g)
 {
-	replace(t.begin(), t.end(), ' ', '_');
-	replace(a.begin(), a.end(), ' ', '_');
-	replace(g.begin(), g.end(), ' ', '_');
+
+	replace(i.begin(), i.end(), '_', ' ');
+	replace(t.begin(), t.end(), '_', ' ');
+	replace(a.begin(), a.end(), '_', ' ');
+	replace(g.begin(), g.end(), '_', ' ');
 }
-*/
 
 void hDisplay(Book& item)
 {
 	cout << left;
-	cout << " " << setw(40) << item.getISBN() << " ";
-	cout << " " << setw(10) << item.getTitle() << "  ";
-	cout << " " << setw(35) << item.getAuthor() << "  ";
+	cout << " " << setw(20) << item.getISBN() << " ";
+	cout << " " << setw(40) << item.getTitle() << "  ";
+	cout << " " << setw(40) << item.getAuthor() << "  ";
 	cout << " " << setw(40) << item.getGenre() << "  ";
 	cout << right;
 	cout << " " << setw(10) << item.getQuantity() << " ";
@@ -419,26 +414,3 @@ void iDisplay(Book& item, int level)
 		cout << "..";
 	cout << level << "). " << item.getTitle() << endl;
 }
-
-
-/*~*~*~*
-  Finds the Id of a given book.
-  Written by James Qin
-*~**
-string findID(Book& b)
-{
-	string title = b.getTitle();
-	string author = b.getAuthor();
-	string genre = b.getGenre();
-	char tFront = title.front();
-	char tBack = title.back();
-	char a = author.front();
-	char g = genre.front();
-	string key = "";
-	key.push_back(tFront);
-	key.push_back(tBack);
-	key.push_back(a);
-	key.push_back(g);
-	// cout << "key: " << key << endl;
-	return key;
-} */
