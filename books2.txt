@@ -1,0 +1,10 @@
+9780393316049 Surely_You're_Joking,_Mr._Feynman! Richard_Feynman Authobiography,_Humor 1
+9780553210095 The_Scarlet_Letter Nathaniel_Hawthorne Romantic,_Historical_Fiction 4
+9780393966404 Adventures_of_Huckleberry_Finn Mark_Twain Picaresque_Novel 5
+9780199536955 The_Adventures_of_Sherlock_Holmes Arthur_Conan_Doyle Detective_Fiction,_Short_Stories 3
+9780393356250 Odyssey Homer Epic_poetry 3
+9780679752554 Discipline_and_Punish Michel_Foucault Philosophy 1
+9780307338402 Secrets_of_Mental_Math Arthur_Benjamin Mathematics 3
+9780786808014 Artemis_Fowl Eoin_Colfer Fantasy,_Children's_Literature 3
+9780553382563 I_Robot Isaak_Asimov Science_Fiction 4
+9780156001311 The_Name_Of_The_Rose Umberto_Eco Historical_Novel 7
