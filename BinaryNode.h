@@ -28,8 +28,8 @@ public:
 
     // getters
     Book getItem() const { return item; }
-    BinaryNode * getLeftPtr() const { return leftPtr; }
-    BinaryNode * getRightPtr() const { return rightPtr; }
+    BinaryNode* getLeftPtr() const { return leftPtr; }
+    BinaryNode* getRightPtr() const { return rightPtr; }
 
     // other functions
     bool isLeaf() const { return (leftPtr == 0 && rightPtr == 0); }
@@ -37,4 +37,3 @@ public:
 };
 
 #endif
-

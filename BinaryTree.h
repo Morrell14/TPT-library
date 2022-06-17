@@ -6,6 +6,7 @@
 #define _BINARY_TREE
 
 #include "BinaryNode.h"
+#include "Book.h"
 
 class BinaryTree
 {
@@ -23,15 +24,15 @@ public:
 	bool isEmpty() const { return count == 0; }
 	int getCount() const { return count; }
 	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; }
-	
+
 	void inOrder(void visit(Book&)) const { _inorder(visit, rootPtr); }
-	
+
 	void printTree(void visit(Book&, int)) const { _printTree(visit, rootPtr, 1); }
 	void printLeaves(void visit(Book&)) const { _printLeaves(visit, rootPtr); }
 
 	// abstract functions to be implemented by derived class
 	virtual bool insert(const Book& newData) = 0;
-	
+
 private:
 	// delete all nodes from the tree
 	void destroyTree(BinaryNode* nodePtr);
@@ -101,4 +102,3 @@ void BinaryTree::_printLeaves(void visit(Book&), BinaryNode* nodePtr) const {
 
 }
 #endif
-
