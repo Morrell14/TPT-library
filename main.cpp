@@ -9,6 +9,7 @@
 #include "Book.h"
 #include "HashTable.h"
 #include "BinarySearchTree.h"
+#include "StackADT.h"
 
 using namespace std;
 
@@ -28,32 +29,130 @@ void menu();
 int main()
 {
 	BinarySearchTree bst;
-	int choice;
+	string choice;
+	HashTable<Book> hashTable;
+	Stack<Book> undo;
+
 	menu(); 							// display the menu
-	cin >> choice;
 
-	if (choice == 1) {					// add data from file
-		string filename = "";
-		int lines = getLines(filename);
-		int hashSize = nextPrime(2 * lines);
-		HashTable<Book> hashAry(hashSize);
-		readInputFile(hashAry, filename, hashSize, bst);
-		hashAry.saveFile();
+	do
+	{
+		//cin >> choice;
+		if (choice == "1") // add data from file
+		{					
+			string filename = "";
+			int lines = getLines(filename);
+			int hashSize = nextPrime(2 * lines);
+			HashTable<Book> hashAry(hashSize);
+			readInputFile(hashAry, filename, hashSize, bst);
+			hashTable = hashAry;
+			//hashAry.saveFile();
+		}
 
-		menu();							// display the menu again
-		cin >> choice;
-
-		if (choice == 2) {					// display Books database
+		if (choice == "2") // display Books database
+		{					
 			//cout << "binary search tree:" << endl;
 			//bst.inOrder(vDisplay);
 			bst.inOrder(hDisplay);
 		}
-	}
+
+		if (choice == "3")
+		{
+			string isbn;
+			string title;
+			string author;
+			string genre;
+			int quantity;
+			cout << "Enter ISBN: ";
+			cin >> isbn;
+			cin.ignore();
+			cout << "Enter title: ";
+			getline(cin, title);
+			//cin.ignore();
+			cout << "Enter author: ";
+			getline(cin, author);
+			//cin.ignore();
+			cout << "Enter genre: ";
+			getline(cin, genre);
+			//cin.ignore();
+			cout << "Enter quantity: ";
+			cin >> quantity;
+			//cin.ignore();
+			Book item(isbn, title, author, genre, quantity);
+			hashTable.insert(item, key_to_index);
+			bst.insert(item);
+		}
+
+		if (choice == "4")
+		{
+			string isbn;
+			cout << "Enter ISBN number of book to search: ";
+			cin >> isbn;
+			Book temp(isbn, "", "", "", 0);
+			Book result;
+			int index = hashTable.search(result, temp, key_to_index);
+			if (index != -1)
+			{
+				cout << "Book found!" << endl;
+				cout << result << endl;
+			}
+			else
+			{
+				cout << "No such book was found." << endl;
+			}
+		}
+
+		if (choice == "5")
+		{
+			string isbn;
+			cout << "Enter ISBN number of book to delete: ";
+			cin >> isbn;
+			Book temp(isbn, "", "", "", 0);
+			Book output;
+			hashTable.remove(output, temp, key_to_index);
+			bst.remove(output);
+			undo.push(output);
+		}
+
+		if (choice == "6")
+		{
+			Book restored = undo.pop();
+			cout << "Book " << restored.getTitle() << " restored." << endl;
+		}
+
+		if (choice == "7")
+		{
+			cout << "Load factor: " << hashTable.getLoadFactor() << endl;
+			cout << "Total collisions: " << hashTable.getTotalCollisions() << endl;
+			cout << "Longest collision path: " << hashTable.findLargestPath() << endl;
+		}
+
+		if (choice == "8")
+		{
+			hashTable.saveFile();
+		}
+
+		if (choice == "9")	// display the menu again
+		{
+			menu();
+		}
+
+		if (choice == "t")
+		{
+			bst.printTree(iDisplay);
+		}
+
+		if (choice == "a")
+		{
+			cout << "Team 10: Tagbaley Tanguy Paul Morrell Nioble, Henry Vo, Rimma Esheva, and James Qin." << endl;
+		}
+
+		cout << "Enter option of choice, 9 to bring up the menu again, or q to quit." << endl;
+		cin >> choice;
+	} while (choice != "q");
 
 	return 0;
 }
-
-
 
 /*~*~*~*
   Program Menu.
@@ -71,12 +170,11 @@ void menu() {
 		<< "5 - Delete Book From Database\n"
 		<< "6 - Undo Delete\n"
 		<< "7 - Show Statistics\n"
-		<< "8 - Help\n"
-		<< "9 -Quit\n";
+		<< "8 - Save to file\n"
+		<< "9 - Help\n"
+		<< "q - Quit\n";
 
 }
-
-
 
 /*~*~*~*
   Reads an input file and inserts the data into the hash table and BST,
@@ -99,9 +197,9 @@ void readInputFile(HashTable<Book>& hashAry, string filename, int hashSize, Bina
 	inFile.open(filename);
 	//cout << "hashSize: " << hashSize << endl;
 	cout << "Preview of books inserted: ";
-	while (inFile >> title)
+	while (inFile >> isbn)
 	{
-		inFile >> isbn >> title >> author >> genre >> quantity;
+		inFile >> title >> author >> genre >> quantity;
 		reformatData(title, author, genre);
 		Book item(isbn, title, author, genre, quantity);
 		if (hashAry.getLoadFactor() >= 75)		// Create a new, bigger hash table if load factor >= 75%
@@ -130,7 +228,7 @@ void readInputFile(HashTable<Book>& hashAry, string filename, int hashSize, Bina
 *~**/
 int key_to_index(const Book& key, int size)
 {
-	string k = key.getTitle();
+	string k = key.getISBN();
 	int sum = 0;
 	for (int i = 0; k[i]; i++)
 		sum += k[i];
