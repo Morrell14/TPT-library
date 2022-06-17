@@ -170,6 +170,8 @@ int main()
 				undo.pop();
 			}
 			deleted = 0;
+			hashTable.setTotalCollisions(0);
+			hashTable.setMostCollisions(0);
 		}
 
 		if (choice == "9")	// display the menu again

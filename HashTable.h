@@ -15,10 +15,11 @@ private:
     int hashSize;
     int count;
     int totalCollisions;
+    int longestCollision;
 
 public:
-    HashTable() { count = 0; hashSize = 53; hashAry = new HashNode<ItemType>[hashSize]; totalCollisions = 0; }
-    HashTable(int n) { count = 0; hashSize = n;	hashAry = new HashNode<ItemType>[hashSize]; totalCollisions = 0; }
+    HashTable() { count = 0; hashSize = 53; hashAry = new HashNode<ItemType>[hashSize]; totalCollisions = 0; longestCollision = 0; }
+    HashTable(int n) { count = 0; hashSize = n;	hashAry = new HashNode<ItemType>[hashSize]; totalCollisions = 0; longestCollision = 0; }
     ~HashTable() { delete[] hashAry; }
 
     int getCount() const { return count; }
@@ -27,12 +28,14 @@ public:
     bool isEmpty() const { return count == 0; }
     bool isFull()  const { return count == hashSize; }
     int getTotalCollisions() const { return totalCollisions; }
+    void setTotalCollisions(int c) { totalCollisions = c; }
 
     bool insert(const ItemType& itemIn, int h(const ItemType& key, int size));
     bool remove(ItemType& itemOut, const ItemType& key, int h(const ItemType& key, int size));
     int search(ItemType& itemOut, const ItemType& key, int h(const ItemType& key, int size));
     int findLargestPath();
-
+    int getMostCollisions() { longestCollision = findLargestPath(); return longestCollision; }
+    void setMostCollisions(int p) { longestCollision = p; }
     HashTable<ItemType>* rehash(int size, int nextPrime(int n), int h(const ItemType& key, int size));
     //void saveFile(void reformatOutData(string& t, string& a, string& g));     // Book data type only
     void saveFile();    // Generic data type version
@@ -136,7 +139,6 @@ int HashTable<ItemType> :: findLargestPath()
         }
         dex++;
     } while (dex != hashSize);
-
     return largest; 
 }
 
@@ -214,12 +216,13 @@ void HashTable<ItemType>::saveFile()
 
             //string title, author, genre;
             //int quantity;
+            //isbn = hashAry[i].getItem.getISBN();
             //title = hashAry[i].getItem().getTitle();
             //author = hashAry[i].getItem().getAuthor();
             //genre = hashAry[i].getItem().getGenre();
             //quantity = hashAry[i].getItem().getQuantity();
             //reformatOutData(title, author, genre);
-            //outFile << title << " " << author << " " << genre << " " << quantity << std::endl;
+            //outFile << isbn << " " << title << " " << author << " " << genre << " " << quantity << std::endl;
              
 
             //std::cout << "wrote " << hashAry[i].getItem().getTitle() << " to file" << std::endl;
