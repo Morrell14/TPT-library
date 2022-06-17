@@ -95,8 +95,7 @@ int main()
 			cin >> isbn;
 			Book temp(isbn, "", "", "", 0);
 			Book result;
-			int index = hashTable.search(result, temp, key_to_index);
-			if (index != -1)
+			if (hashTable.search(result, temp, key_to_index))
 			{
 				cout << "Book found!" << endl;
 				cout << result << endl;
@@ -114,10 +113,16 @@ int main()
 			cin >> isbn;
 			Book temp(isbn, "", "", "", 0);
 			Book output;
-			hashTable.remove(output, temp, key_to_index);
-			bst.remove(output);
-			undo.push(output);
-			deleted++;
+			if (hashTable.remove(output, temp, key_to_index))
+			{
+				bst.remove(output);
+				undo.push(output);
+				deleted++;
+				cout << "Book " << output.getTitle() << " successfully removed." << endl;
+			}
+			else
+				cout << "No such book to delete!" << endl;
+			
 		}
 
 		if (choice == "6")
@@ -129,6 +134,8 @@ int main()
 			else
 			{
 				Book restored = undo.pop();
+				hashTable.insert(restored, key_to_index);
+				bst.insert(restored);
 				cout << "Book " << restored.getTitle() << " restored." << endl;
 				deleted--;
 			}
@@ -169,7 +176,7 @@ int main()
 
 		cout << "Enter option of choice, 9 to bring up the menu again, or q to quit." << endl;
 		cin >> choice;
-	} while (choice != "q");
+	} while (choice != "q" && choice != "Q");
 
 	return 0;
 }
