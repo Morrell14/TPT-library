@@ -93,6 +93,7 @@ int main()
 			Book item(isbn, title, author, genre, quantity);
 			hashTable.insert(item, key_to_index);
 			bst.insert(item);
+			cout << "Book " << item.getTitle() << " inserted." << endl;
 		}
 
 		if (choice == "4")
