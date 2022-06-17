@@ -68,6 +68,11 @@ int main()
 			string author;
 			string genre;
 			int quantity;
+			if (hashTable.getLoadFactor() >= 75)		// Create a new, bigger hash table if load factor >= 75%
+			{
+				hashTable = *hashTable.rehash(hashTable.getSize(), nextPrime, key_to_index);
+				//cout << "rehash called" << endl;
+			}
 			cout << "Enter ISBN: ";
 			cin >> isbn;
 			cin.ignore();
@@ -95,7 +100,7 @@ int main()
 			cin >> isbn;
 			Book temp(isbn, "", "", "", 0);
 			Book result;
-			if (hashTable.search(result, temp, key_to_index))
+			if (hashTable.search(result, temp, key_to_index) != -1)
 			{
 				cout << "Book found!" << endl;
 				cout << result << endl;

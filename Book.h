@@ -39,9 +39,9 @@ public:
     int getQuantity() const { return quantity; }
 
     // overloaded operators
-    bool operator > (const Book& b) { return title > b.getTitle(); };
-    bool operator < (const Book& b) { return title < b.getTitle(); };
-    bool operator == (const Book& b) { return title == b.getTitle(); };
+    bool operator > (const Book& b) { return isbn > b.getISBN(); };
+    bool operator < (const Book& b) { return isbn < b.getISBN(); };
+    bool operator == (const Book& b) { return isbn == b.getISBN(); };
     friend std::ostream& operator << (std::ostream& os, const Book& b);
 
     // other functions (may or may not be used)
