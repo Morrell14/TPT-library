@@ -42,10 +42,14 @@ int main()
 		{					
 			string filename = "";
 			int lines = getLines(filename);
-			int hashSize = nextPrime(2 * lines);
-			HashTable<Book> hashAry(hashSize);
-			readInputFile(hashAry, filename, hashSize, bst);
-			hashTable = hashAry;
+			if (lines != -1)
+			{
+				int hashSize = nextPrime(2 * lines);
+				HashTable<Book> hashAry(hashSize);
+				readInputFile(hashAry, filename, hashSize, bst);
+				hashTable = hashAry;
+			}
+			
 			//hashAry.saveFile();
 		}
 
@@ -252,7 +256,7 @@ int getLines(string& filename)
 	bool fileOpened = false;
 	do
 	{
-		cout << "What is the file name? " << endl;
+		cout << "What is the file name? (q to return)" << endl;
 		cin >> input;
 		inFile.open(input);
 		if (inFile)
@@ -266,8 +270,16 @@ int getLines(string& filename)
 			inFile.close();
 		}
 		else
-			cout << "Error: File could not be opened. Please try again." << endl;
-	} while (!fileOpened);
+		{
+			if (input != "q")
+				cout << "Error: File could not be opened. Please try again." << endl;
+		}
+			
+	} while (!fileOpened && input != "q");
+	if (input == "q")
+	{
+		return -1;
+	}
 	//cout << "lines read: " << count << endl;
 	cout << "File " << input << " successfully opened!" << endl;
 	return count;
